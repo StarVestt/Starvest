@@ -20,8 +20,10 @@
 ```
 
 ### PUT
+```
 {
     "text":"value"
 }
+```
 
 - To delete or edit a blog the sample id's are test1 and test2
