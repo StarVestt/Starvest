@@ -1,51 +1,62 @@
-const blogs = [
-    {
-        name: "testing blog API",
-        content: "sends the blog to the server"
-    },
-    {
-        name: "test1",
-        content: "delete the blog to the server"
-    },
-    {
-        name: "test2",
-        content: "change the blog content to the server"
-    }
-]
+const asyncHandler = require("express-async-handler");
+const Blog = require("../model/blogModel")
 
 //@desc     get all blogs
 //@route    GET /api/blogs
 //@access   public
-const getBlogs = (req, res) => {
-    res.status(200).json({ blogs: blogs });
-}
+const getBlogs = asyncHandler(async (req, res) => {
+    const blogs = await Blog.find()
+    res.status(200).json(blogs)
+})
 
 //@desc     post a blog
 //@route    POST /api/blogs
 //@access   private
-const postBlog = (req, res) => {
-    (!req.body.content || !req.body.name) ?
-        res.status(400).json({ message: "Please add blog name and content" }) :
-        res.status(200).json({ blogs: [...blogs, req.body] });
-}
+const postBlog = asyncHandler(async (req, res) => {
+    if(!req.body.title || !req.body.content) {
+        res.status(400)
+        throw new Error("Blog details missing")
+    }
+
+    const blog = await Blog.create({
+        title: req.body.title,
+        content: req.body.content,
+        likes: req.body.likes ? req.body.likes : 0,
+        comments: req.body.comments ? req.body.comments : []
+    })
+
+    res.status(200).json(blog)
+})
 
 //@desc     update a blog
 //@route    PUT /api/blogs/:id
 //@access   private
-const putBlog = (req, res) => {
-    if (!blogs.find(blog => req.params.id === blog.name)) {
-        res.status(404)
-        throw new Error("id not found");
+const putBlog = asyncHandler(async (req, res) => {
+    const blog = await Blog.findById(req.params.id)
+
+    if(!blog) {
+        res.status(400)
+        throw new Error("Blog not found")
     }
-    res.status(200).json({ blogs: blogs.map(blog => blog.name === req.params.id ? { ...blog, content: req.body.text } : blog) });
-}
+
+    const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    res.status(200).json(updatedBlog)
+})
 
 //@desc     delete a blog
 //@route    PUT /api/blogs/:id
 //@access   private
-const deleteBlog = (req, res) => {
-    res.status(200).json({ blogs: blogs.filter(blog => blog.name !== req.params.id) });
-}
+const deleteBlog = asyncHandler(async (req, res) => {
+    const blog = await Blog.findById(req.params.id)
+
+    if(!blog) {
+        res.status(404)
+        throw new Error("Blog not found")
+    }
+ 
+    blog.remove();
+    res.status(200).json({ id: req.params.id })
+})
 
 module.exports = {
     getBlogs,
