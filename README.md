@@ -35,4 +35,4 @@
 }
 ```
 
-- To delete or edit a blog the id's are written in the blogs itself, make a get request and get the id.
+- To delete or edit a blog the id's are written in the blogs itself, make a get request and get the id. 
