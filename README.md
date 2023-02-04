@@ -1,17 +1,19 @@
 # StarVest
 
-## Added Backend with real database
-- You can test the 4 methods - GET, POST, PUT, DELETE
+# File structure
+- Config folder contains the configuration for the database linking
 - Controller folder contains all the method functions are declared
+- Middleware folder contains an error middleware to generate a custom error message
+- Model folder contains all the schemas and models for our collection
 - Routes folder contains the routes.
-- middleware folder contains an error middleware to generate a custom error message
-- model folder contains all the schemas and models for our collection
-- config folder contains the configuration for the database linking
+- Test folder contains all the tests
 
+# Running the Server
 ## How to run
 - Clone the github repo
 - Do ```npm install```
-- Enter command: ```npm run server```
+- Enter command: ```npm run server``` to run with nodemon
+- Enter command: ```npm run server-once``` to run it once
 - This will start the server, wait for the Connection establishment message from mongo and now you can test the API's
 
 ## Testing routes
@@ -36,3 +38,12 @@
 ```
 
 - To delete or edit a blog the id's are written in the blogs itself, make a get request and get the id. 
+
+# Running Tests
+## How to run tests
+- Enter command: ```npm run test```
+
+
+## Some Points to remember:
+> - Running the server and tests at the same time will give error as the database can only be used by one at a time.
+> - Sometimes there will be connection error while connecting to mongoDB so try reconnecting again
