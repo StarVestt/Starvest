@@ -25,7 +25,7 @@ const postBlog = asyncHandler(async (req, res) => {
         comments: req.body.comments ? req.body.comments : []
     })
 
-    res.status(200).json(blog)
+    res.status(201).json(blog)
 })
 
 //@desc     update a blog
