@@ -28,7 +28,6 @@ describe("POST /api/blogs", () => {
             content: "I wrote a Jest test for the first time and it worked!"
         });
         expect(res.statusCode).toBe(201);
-        // expect(res.statusCode).toBe(200);
         expect(res.body.title).toBe("How my test worked?");
     })
 })
@@ -51,3 +50,4 @@ describe("DELETE /api/blogs/:id", () => {
         expect(res.statusCode).toBe(200);
     })
 })
+

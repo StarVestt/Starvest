@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 
 const blogSchema = mongoose.Schema({
+    // user: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     required: true,
+    //     ref: "Profile"
+    // },
     title: {
         type: String,
         required: [true, "Please add a title to your blog"]
@@ -10,7 +15,8 @@ const blogSchema = mongoose.Schema({
         required: [true, "Can\'t publish empty blog"]
     },
     likes: Number,
-    comments: Array
+    comments: Array,
+    tags: Array
 })
 
 module.exports = mongoose.model("Blog", blogSchema);
