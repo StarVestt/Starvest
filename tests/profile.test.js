@@ -4,16 +4,12 @@ const app = require("../backend/app");
 const Profile = require("../backend/model/profileModel")
 require("dotenv").config();
 
-beforeEach(async () => {
-    mongoose.connect(process.env.MONGO_URI);
-});
+beforeEach(async () => await mongoose.connect(process.env.MONGO_URI));
 
-afterEach(async () => {
-    mongoose.connection.close()
-});
+afterEach(async () => await mongoose.connection.close());
 
 describe('POST /profile', () => {
-    it('should create a new profile', async () => {
+    return it('should create a new profile', async () => {
         const res = await request(app).post("/profile").send({
             fullname: "test",
             bio: "this is bio",
@@ -27,7 +23,7 @@ describe('POST /profile', () => {
 });
 
 describe('POST /profile/login', () => {
-    it('should log in the profile', async () => {
+    return it('should log in the profile', async () => {
         const res = await request(app).post("/profile/login").send({
             email: "some@mail.com",
             password: "password"
@@ -38,7 +34,7 @@ describe('POST /profile/login', () => {
 });
 
 describe('GET /profile/me', () => {
-    it('should return the profile', async () => {
+    return it('should return the profile', async () => {
         let token = "";
         const loginRes = await request(app).post("/profile/login").send({
             email: "some@mail.com",
@@ -54,7 +50,7 @@ describe('GET /profile/me', () => {
 });
 
 describe('DELETE /profile/delete', () => {
-    it('should delete the selected user', async () => {
+    return it('should delete the selected user', async () => {
         let token = "";
         const loginRes = await request(app).post("/profile/login").send({
             email: "some@mail.com",
