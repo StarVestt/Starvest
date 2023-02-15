@@ -44,7 +44,7 @@ const putBlog = asyncHandler(async (req, res) => {
 })
 
 //@desc     delete a blog
-//@route    PUT /api/blogs/:id
+//@route    DELETE /api/blogs/:id
 //@access   private
 const deleteBlog = asyncHandler(async (req, res) => {
     const blog = await Blog.findById(req.params.id)
